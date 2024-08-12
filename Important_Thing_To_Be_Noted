@@ -1,0 +1,31 @@
+#1) In app.py i have use FAISS.form_documents() -> saved the file in current working directory,,,and loaded the document using document = loader.load_and_split(),
+    # thus we get document,,inside page_content 1 page data is there,,if u have 3 pages then 3 document you get in list,,,then perform chunking on each document to 
+    # get several documents using split_documents,,(internally handles page_content),,,then .from_documents(list_of_chunks,embedding_func) to create embedding for 
+    # page_content of each document and store that ebedding along woth respective page_content into vector db(if u mentioned remote db api then embeddings for each 
+    # chunk is stored there else in local side ,,inside current working directory db is created and store the vector/embedding in sqllite as binary object which cant 
+    # be readable,,just we can perform vector algebra operation on it like similarity search..etcand returning the page_content or text of the stored document w.r.t
+    #  most similar vector to query vector)
+
+#2) In this file app2.py i will  use FAISS.from_texts() -> not storing files,which are uploaded by user through streamlit app,,,,just converting uploaded file to bytes or binary object 
+    # and pass it to get_file_text ,,which will convert those bytes obj in to readable text format like this 'hi my name is shree jagatap , i am data scientist, i work in pune and stay in 
+    # belagavi',,,,,,,,,and then this text is converted to chunks like this 
+    # ['hi my name is', 'name is shree jagata' , 'shree jagatap i am data scientist', 'data scientist i work in', 'i work in pune and', 'pune and stay in belagavi'],,,,
+    # then this is passed to FAISS.from_texts(text_chunks,embedding_function),,thus each text and there respective vectors/embeddings are stored in vector db 
+    # like this [('hi my name is',[0.76,-0.3,...]) , ('hi my name is',[-0.21,0.1,...]) , ().....etc],,,,,not exactly like this,,,,,
+    # i have just shown you that both,chunk and it's repspective vector/embedding is stored in vector db,,,if you mentioned remote vector db api then ,,there it will be stored,else locally 
+    # ie; inside current working dir , what we name mention by that name one folder is created and there in sqllite db vectors are stored in binary obj and chunks are stored in meta_data,,
+    # and relationship is established to recognize which vector belongs to which chunk....when user quesry something,then that query is converted to vector and using this stored vector db 
+    # performing similarity_search,,,,then this db will return chunk w.r.t most similar vector compare to query vector..if k=1 then only 1 chunk is retured which is most similar compare to 
+    # other stored vectors , if k=2 then 2chunks were returned.....
+    # these chunks may contain desired answer w.r.t query/user_question,,,,but assume [('hi my name is...............around 10k words',[0.76,-0.3,...]) , ('hi my name is..............around 10k words',[-0.21,0.1,...]) , ().....etc]
+    #it is the case then retrieved chunk has around 10k words,,and finding specific answer and in specific format w.r.t query/user_question,ie;we want just 50 word response...in beautiful manner
+    #which satsfy user,,what he asked,,,,,,,,,,,,,,,so to get "specific answer" OR "refine" the answer w.r.t asked query or user_question,,we have to pass this chunk got from vector db and query to any LLM
+    #then it will give you specific or refined answer in beautifull format,,,thus user will satisfy,,,,,,,,,,,,,and if chunk doesnt contain answer,,bcz query/user question is out of 
+    # uploaded document scope then LLM will return "sorry,i cant found answer in given text".................
+    #and this connection b/n  "vector db (our use case data) (local or remote)" with any LLM(gen AI models),,,is called RAG(RETRIEVAL AUGMENTED GENERATION)............................
+
+#RETRIEVAL -> retriving the most similar chunk from vector db w.r.t query vector.......not only similarity_search operation,,,,we can retrieve chunk using all kind of vector algebric operation to get most desired answer
+#AUGMENTED -> to Refine the retrieved chunk or chunks or to extract specific info w.r.t query,,we use LLM ,,,ie; we are augmenting or modifying the chunk w.r.t query chunk,,by understanding context/meaning of query,,to get specific answer to our query presented in beautiful manner for easy understanding 
+#GENERATION -> and we are generating new data based on given data and query,,, which is a generative AI task,,so known as generation task
+
+#see my vector db folder in generative-ai learning,,you come to know what is document and what is text

@@ -1,0 +1,19 @@
+1)created virtual environment name "qa_venv"...........with python=3.10..........by selecting or in conda's base environment.........you can create it using global python environment also
+2)activate this env OR select any python file -> bottom right in vs code you see ,,selectiong option for python interpreter,,there you can select pythom 3.10.4 ('qa_venv' :conda),,thus you are in qa_venv
+3)Very Important point,,,,,,,,,,whenever you want to use any class , methods of langchain,llama index , gemini , openai...plz go through documentations...
+  ..bcz ,updation in module/package/framework's happens reguraly,,,so there are 2 conflicts occurr
+  a) you have older version of module and using newer version's mthods,class..etc
+  b) you have higher version of module and using lower version's methods,class..etc
+    so in these case,,,error happen definetly.............
+4)better way -> before setting up virtual environment and downloading all require lib/modules for developing project,,,
+    a)first visit documentation of each module and framework(langchain,llamaindex...etc functionality).......
+    b)they provide latest version module, framework dounloading command (pip install --upgrade......),,,use it and ,,,by seeing documentations,,,use methods,class...etc functionality
+    c)Just see youtube,,for flow of developing project (ie;project pipeline),,,and by reading documentations,,use methods,classes..etc accordingly
+5) .streamlit ,,folder is just bcz,, i am getting error while uploading file,,,thus ,,by setting this configuration,,i can able to fixed this error,,,now i can upload files and store that uploaded file in my current working director
+6) pip install --upgrade --quiet  langchain-google-genai  ...(GoogleGenerativeAIEmbeddings for using this method) ,,,,when i am getting error while embedding the document,i used this by reading document and used latest class and method for it,,so i resolved error
+
+7) whenever you select anothe file and hit submit,,again your app.py will run ..........
+8) if you have done any mistake or any error occured in streamlit app,,then you can fix it in and hit the rerun option of streamlit app...no need to execute streamlit run app.py again
+9) dont give unneccessory spaces,,,like (model =  "models/embedding-001"),,,gives error.........and after fixing error also,,getting error then upgrade modules and use latest functionalities instead,,and close the app,and execure streamlit run app.py again
+
+10) Please understand ,,which function/method needs what kind of data,,is it needed list or text or ..etc,,thus error not occurrs
